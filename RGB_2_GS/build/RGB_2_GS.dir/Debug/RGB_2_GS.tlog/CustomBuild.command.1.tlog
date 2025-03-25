@@ -1,0 +1,10 @@
+^C:\APPLICATIONS\OPENCV\VERSION_4_11_0\RGB_2_GS\CMAKELISTS.TXT
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Applications/OpenCV/Version_4_11_0/RGB_2_GS -BC:/Applications/OpenCV/Version_4_11_0/RGB_2_GS/build --check-stamp-file C:/Applications/OpenCV/Version_4_11_0/RGB_2_GS/build/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

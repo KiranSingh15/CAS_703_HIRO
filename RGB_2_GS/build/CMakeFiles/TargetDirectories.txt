@@ -1,0 +1,3 @@
+C:/Applications/OpenCV/Version_4_11_0/RGB_2_GS/build/CMakeFiles/RGB_2_GS.dir
+C:/Applications/OpenCV/Version_4_11_0/RGB_2_GS/build/CMakeFiles/ALL_BUILD.dir
+C:/Applications/OpenCV/Version_4_11_0/RGB_2_GS/build/CMakeFiles/ZERO_CHECK.dir

@@ -1,0 +1,33 @@
+# CMake generation dependency list for this directory.
+C:/Applications/OpenCV/Version_4_11_0/RGB_2_GS/CMakeLists.txt
+C:/Applications/OpenCV/Version_4_11_0/RGB_2_GS/build/CMakeFiles/3.30.3/CMakeCCompiler.cmake
+C:/Applications/OpenCV/Version_4_11_0/RGB_2_GS/build/CMakeFiles/3.30.3/CMakeCXXCompiler.cmake
+C:/Applications/OpenCV/Version_4_11_0/RGB_2_GS/build/CMakeFiles/3.30.3/CMakeRCCompiler.cmake
+C:/Applications/OpenCV/Version_4_11_0/RGB_2_GS/build/CMakeFiles/3.30.3/CMakeSystem.cmake
+C:/Applications/OpenCV/Version_4_11_0/opencv/build/OpenCVConfig-version.cmake
+C:/Applications/OpenCV/Version_4_11_0/opencv/build/OpenCVConfig.cmake
+C:/Applications/OpenCV/Version_4_11_0/opencv/build/x64/vc16/lib/OpenCVConfig.cmake
+C:/Applications/OpenCV/Version_4_11_0/opencv/build/x64/vc16/lib/OpenCVModules-debug.cmake
+C:/Applications/OpenCV/Version_4_11_0/opencv/build/x64/vc16/lib/OpenCVModules-release.cmake
+C:/Applications/OpenCV/Version_4_11_0/opencv/build/x64/vc16/lib/OpenCVModules.cmake
+C:/Program Files/CMake/share/cmake-3.30/Modules/CMakeCInformation.cmake
+C:/Program Files/CMake/share/cmake-3.30/Modules/CMakeCXXInformation.cmake
+C:/Program Files/CMake/share/cmake-3.30/Modules/CMakeCommonLanguageInclude.cmake
+C:/Program Files/CMake/share/cmake-3.30/Modules/CMakeGenericSystem.cmake
+C:/Program Files/CMake/share/cmake-3.30/Modules/CMakeInitializeConfigs.cmake
+C:/Program Files/CMake/share/cmake-3.30/Modules/CMakeLanguageInformation.cmake
+C:/Program Files/CMake/share/cmake-3.30/Modules/CMakeRCInformation.cmake
+C:/Program Files/CMake/share/cmake-3.30/Modules/CMakeSystemSpecificInformation.cmake
+C:/Program Files/CMake/share/cmake-3.30/Modules/CMakeSystemSpecificInitialize.cmake
+C:/Program Files/CMake/share/cmake-3.30/Modules/Compiler/CMakeCommonCompilerMacros.cmake
+C:/Program Files/CMake/share/cmake-3.30/Modules/Compiler/MSVC-C.cmake
+C:/Program Files/CMake/share/cmake-3.30/Modules/Compiler/MSVC-CXX.cmake
+C:/Program Files/CMake/share/cmake-3.30/Modules/Compiler/MSVC.cmake
+C:/Program Files/CMake/share/cmake-3.30/Modules/FindPackageHandleStandardArgs.cmake
+C:/Program Files/CMake/share/cmake-3.30/Modules/FindPackageMessage.cmake
+C:/Program Files/CMake/share/cmake-3.30/Modules/Platform/Windows-Initialize.cmake
+C:/Program Files/CMake/share/cmake-3.30/Modules/Platform/Windows-MSVC-C.cmake
+C:/Program Files/CMake/share/cmake-3.30/Modules/Platform/Windows-MSVC-CXX.cmake
+C:/Program Files/CMake/share/cmake-3.30/Modules/Platform/Windows-MSVC.cmake
+C:/Program Files/CMake/share/cmake-3.30/Modules/Platform/Windows.cmake
+C:/Program Files/CMake/share/cmake-3.30/Modules/Platform/WindowsPaths.cmake
