@@ -3,18 +3,26 @@
 
 #include <chrono>
 #include <string>
+#include "imageOperations.hpp"
+#include "master.hpp"
+
+class Master;
 
 class Worker {
 
 private:
     // Attributes
-    std::chrono::high_resolution_clock::time_point start;
-    std::chrono::duration<double> duration;
+    Master* master;
+    size_t pid;
+    // std::chrono::high_resolution_clock::time_point start;
+    // std::chrono::duration<double> duration;
     std::string filename;
 
 public:
     // Constructor
-    explicit Worker(const std::string& name) : duration(0.0), filename(name) {}
+    Worker(Master* master, size_t pid) : master(master), pid(pid) {};
+
+    void operator()();
 
     // Methods
     void loggingMetrics();
