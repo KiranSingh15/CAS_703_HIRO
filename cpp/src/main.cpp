@@ -2,15 +2,27 @@
 #include <opencv2/opencv.hpp>
 #include <string>
 #include <chrono>
+#include <filesystem>
+#include <vector>
+#include <thread>
 #include "../include/imageOperations.hpp"
+#include "../include/worker.hpp"
 
 int main (int argc, char *argv[]) {
 
     const std::string IMPORT_PATH = "../images/";
     const std::string EXPORT_PATH = "../output/";
 
+    // int numThreads = std::thread::hardware_concurrency();
+    // std::cout << numThreads << std::endl;
+
+    std::vector<std::string> files;
+
+    for (const auto& entry : std::filesystem::directory_iterator(IMPORT_PATH))
+        files.push_back(entry.path());
+
     // Load an image
-    cv::Mat rgbImage = cv::imread(IMPORT_PATH + "cybertruck.jpg", cv::IMREAD_COLOR);
+    cv::Mat rgbImage = cv::imread(files[0], cv::IMREAD_COLOR);
 
     if (rgbImage.empty()) {
         std::cerr << "Error: Could not open or find the image!" << std::endl;
@@ -45,6 +57,9 @@ int main (int argc, char *argv[]) {
     // cv::imshow("2nd Order Laplacian", laplacianImage);
     // cv::waitKey(0);
     // cv::destroyAllWindows();
+    
+    Worker slave(files[0]);
+    slave.loggingMetrics();
 
     // Download the images
     cv::imwrite(EXPORT_PATH + "cybertruck.jpg", laplacianImage);
