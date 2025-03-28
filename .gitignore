@@ -1,0 +1,45 @@
+# Build artifacts
+/CMakeCache.txt
+/Makefile
+/install_manifest.txt
+compile_commands.json
+
+# Executables and libraries
+*.exe
+*.out
+*.app
+*.so
+*.a
+*.lib
+*.dll
+*.dylib
+
+# Object files
+*.o
+*.obj
+*.lo
+*.la
+
+# Logs and temporary files
+*.tmp
+*.swp
+*.swo
+
+# Editor-specific files
+.vscode/
+.idea/
+*.code-workspace
+
+# Debugging
+*.gch
+*.gcda
+*.gcno
+*.gcov
+
+# macOS specific
+.DS_Store
+
+# Windows specific
+Thumbs.db
+Desktop.ini
+
