@@ -26,11 +26,14 @@ Master::~Master() {
             thread.join();
         }
     }
+
+    log_queue.logWorker(available.size());
 }
 
 void Master::handleWorkers() {
-    while (queue.getSize() != 0) {
+    while (true) {
         std::unique_lock<std::mutex> lock(mtx);
+        if (queue.getSize() == 0) break;
         cv_master.wait(lock, [this] { 
             return std::find(available.begin(), available.end(), true) != available.end();
         });

@@ -3,6 +3,7 @@
 
 #include "taskQueue.hpp"
 #include "worker.hpp"
+#include "logs.hpp"
 #include <iostream>
 #include <condition_variable>
 #include <cstddef>
@@ -25,6 +26,7 @@ private:
     std::mutex mtx;
     std::condition_variable cv_master;
     TaskQueue queue;
+    Logs log_queue;
     bool stop = false;
 
     friend class Worker;

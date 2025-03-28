@@ -1,4 +1,5 @@
 #include "../include/worker.hpp"
+#include <chrono>
 #include <opencv2/opencv.hpp>
 #include <iostream>
 #include <mutex>
@@ -20,18 +21,18 @@ void Worker::operator()() {
         {
             std::unique_lock<std::mutex> lock(master->mtx);
             master->available[pid] = true;
+            master->cv_master.notify_one();
         }
-        master->cv_master.notify_one();
     }
 }
 
 void Worker::processingImages() {
 
-    start = std::chrono::high_resolution_clock::now();
+    auto start = std::chrono::high_resolution_clock::now();
 
     cv::Mat rgbImage = cv::imread(IMPORT_PATH + filename, cv::IMREAD_COLOR);
     if (rgbImage.empty()) {
-        std::cerr << "Error: Could not open or find the image!" << std::endl;
+        std::cerr << "Error: Could not open or find the image " << filename << std::endl;
         // return -1;
     }
     // Convert to grayscale
@@ -43,9 +44,10 @@ void Worker::processingImages() {
     // Apply Laplacian filter after Gaussian smoothing
     cv::Mat laplacianImage = applyLaplacianFilter(smoothedImage, 3 , 1, 0);    // kernel_size, scale, and delta/offset
 
-    duration = std::chrono::high_resolution_clock::now() - start;
-    std::cout << "Thread " << pid << " processed " << filename << " which took : " << duration.count() << "seconds." << std::endl;
+    auto end = std::chrono::high_resolution_clock::now();
+    double duration = std::chrono::duration<double, std::milli>(end - start).count();
 
-   cv::imwrite(EXPORT_PATH + filename, laplacianImage); 
+    cv::imwrite(EXPORT_PATH + filename, laplacianImage); 
 
+    master->log_queue.logThreadExecution(pid, filename, duration);
 }

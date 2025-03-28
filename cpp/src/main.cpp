@@ -1,8 +1,7 @@
 #include <iostream>
-#include <opencv2/opencv.hpp>
 #include <string>
-#include <thread>
 #include "../include/master.hpp"
+#include <sys/resource.h> // Pour getrusage()
 
 #define RESET  "\033[0m"
 #define RED    "\033[31m"
@@ -13,7 +12,17 @@
 extern const std::string IMPORT_PATH = "../images/";
 extern const std::string EXPORT_PATH = "../output/";
 
+void printResourceUsage() {
+    struct rusage usage;
+    getrusage(RUSAGE_SELF, &usage);
+    
+    std::cout << "CPU Time: " << (usage.ru_utime.tv_sec + usage.ru_stime.tv_sec) << " sec\n";
+    std::cout << "Mémoire (max resident set size): " << usage.ru_maxrss << " KB\n";
+}
+
 int main (int argc, char *argv[]) {
+
+    std::cout << "\033[2J\033[H"; // Clear terminal
     
     int numThreads = std::thread::hardware_concurrency();
 
@@ -55,19 +64,7 @@ int main (int argc, char *argv[]) {
     Master master(numThreads);
     master.handleWorkers();
 
-
-    // // Load an image
-    // cv::Mat rgbImage = cv::imread(files[0], cv::IMREAD_COLOR);
-    // if (rgbImage.empty()) {
-    //     std::cerr << "Error: Could not open or find the image!" << std::endl;
-    //     return -1;
-    // }
-    //
-    // Worker slave(files[0]);
-    // slave.loggingMetrics();
-    //
-    // // Download the images
-    // cv::imwrite(EXPORT_PATH + "cybertruck.jpg", laplacianImage);
+    printResourceUsage();
 
     std::cout << "Done !\n";
 

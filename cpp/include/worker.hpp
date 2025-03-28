@@ -15,8 +15,6 @@ private:
     // Attributes
     Master* master;
     size_t pid;
-    std::chrono::high_resolution_clock::time_point start;
-    std::chrono::duration<double> duration;
     std::string filename;
 
 public:
