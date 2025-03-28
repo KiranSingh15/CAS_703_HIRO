@@ -74,6 +74,12 @@ void Logs::logWorker(size_t num_threads) {
     }
 
     log_file.close();
+
+    std::cout << "\n==== Execution Summary ====\n";
+    std::cout << "Total execution time: " << total_time << " ms\n";
+    std::cout << "Total images processed: " << total_images << "\n";
+    std::cout << "Total size processed: " << total_size / (1024.0 * 1024.0) << " MB\n";
+
 }
 
 void Logs::logThreadExecution(int thread_id, const std::string& filename, double duration) {
