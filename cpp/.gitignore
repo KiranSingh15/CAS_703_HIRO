@@ -1,5 +1,7 @@
 # Build artifacts
 /build/
+/output/
+/images/
 /CMakeFiles/
 /CMakeCache.txt
 /Makefile

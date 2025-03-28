@@ -21,6 +21,7 @@ class Master {
 
 private:
     std::vector<std::thread> workers;
+    std::vector<bool> available;
     std::mutex mtx;
     std::condition_variable cv_master;
     TaskQueue queue;
@@ -33,6 +34,7 @@ public:
     ~Master();
     void loadImages();
     void displayImages(const std::string& filename);
+    void handleWorkers();
 
 };
 

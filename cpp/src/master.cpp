@@ -1,7 +1,7 @@
 #include "../include/master.hpp"
 #include <opencv2/opencv.hpp>
 
-Master::Master(size_t numThreads) {
+Master::Master(size_t numThreads) : available(numThreads, true) {
 
     for (const auto& entry : std::filesystem::directory_iterator(IMPORT_PATH)) {
         queue.push(entry.path().filename());
@@ -15,7 +15,10 @@ Master::Master(size_t numThreads) {
 }
 
 Master::~Master() {
-    stop = true;
+    {
+        std::unique_lock<std::mutex> lock(mtx);
+        stop = true;
+    }
     cv_master.notify_all();
 
     for (auto& thread : workers) {
@@ -23,6 +26,23 @@ Master::~Master() {
             thread.join();
         }
     }
+}
+
+void Master::handleWorkers() {
+    while (queue.getSize() != 0) {
+        std::unique_lock<std::mutex> lock(mtx);
+        cv_master.wait(lock, [this] { 
+            return std::find(available.begin(), available.end(), true) != available.end();
+        });
+
+        // Trouver un thread disponible
+        for (size_t i = 0; i < workers.size(); ++i) {
+            if (available[i]) {
+                cv_master.notify_one();
+                break;
+            }
+        }
+    }    
 }
 
 // void Master::displayImages(const std::string& filename) {

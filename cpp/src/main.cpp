@@ -52,10 +52,10 @@ int main (int argc, char *argv[]) {
     std::cout << "Running with " << BLUE << numThreads << RESET << " threads.\n";
 
     // Continue with master-slave execution
-    // Master master(numThreads);
-    // master.loadImages();
-    //
-    //
+    Master master(numThreads);
+    master.handleWorkers();
+
+
     // // Load an image
     // cv::Mat rgbImage = cv::imread(files[0], cv::IMREAD_COLOR);
     // if (rgbImage.empty()) {

@@ -2,14 +2,14 @@
 #include <mutex>
 
 void TaskQueue::push(const std::string& value) {
-    std::unique_lock<std::mutex> lock(mutex);
+    std::lock_guard<std::mutex> lock(mutex);
     queue.push(value);
-    cond_var.notify_one();
+    // cond_var.notify_one();
 }
 
 bool TaskQueue::pop(std::string& value) {
-    std::unique_lock<std::mutex> lock(mutex);
-    cond_var.wait(lock, [this] {return !queue.empty();});
+    std::lock_guard<std::mutex> lock(mutex);
+    // cond_var.wait(lock, [this] {return !queue.empty();});
 
     if (queue.empty()) return false;
     value = queue.front();
@@ -20,4 +20,9 @@ bool TaskQueue::pop(std::string& value) {
 bool TaskQueue::empty() {
     std::unique_lock<std::mutex> lock(mutex);
     return queue.empty();
+}
+
+const size_t TaskQueue::getSize() {
+    std::lock_guard<std::mutex> lock(mutex);
+    return queue.size();
 }
