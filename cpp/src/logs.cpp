@@ -4,7 +4,7 @@
 #include <ios>
 #include <string>
 
-void Logs::logWorker(size_t num_threads) {
+void Logs::logWorker(size_t num_threads, double total_duration) {
     std::ofstream log_file(EXPORT_PATH + "metrics-" + std::to_string(num_threads) + "threads.log", std::ios::trunc);
 
     std::unordered_map<int, int> thread_work_count;  // Number of images processed by each thread
@@ -61,7 +61,8 @@ void Logs::logWorker(size_t num_threads) {
 
     // Add final metrics
     log_file << "\n==== Execution Summary ====\n";
-    log_file << "Total execution time: " << total_time << " ms\n";
+    log_file << "Total execution time: " << total_duration << " ms\n";
+    log_file << "Total thread execution time: " << total_time << " ms\n";
     log_file << "Total images processed: " << total_images << "\n";
     log_file << "Total size processed: " << total_size / (1024.0 * 1024.0) << " MB\n";
     log_file << "Work distribution:\n";
@@ -75,14 +76,34 @@ void Logs::logWorker(size_t num_threads) {
 
     log_file.close();
 
-    std::cout << "\n==== Execution Summary ====\n";
-    std::cout << "Total execution time: " << total_time << " ms\n";
-    std::cout << "Total images processed: " << total_images << "\n";
-    std::cout << "Total size processed: " << total_size / (1024.0 * 1024.0) << " MB\n";
+    // std::cout << "\n==== Execution Summary ====\n";
+    // std::cout << "Total execution time: " << total_duration << " ms\n";
+    // std::cout << "Total thread execution time: " << total_time << " ms\n";
+    // std::cout << "Total images processed: " << total_images << "\n";
+    // std::cout << "Total size processed: " << total_size / (1024.0 * 1024.0) << " MB\n";
+    // std::cout << "Estimated gains: " << (total_time/total_duration)*100 << "%\n";
+    std::cout << "\n\n============== \033[1;4mExecution Summary\033[0m ==============\n\n";
+    std::cout << std::setw(30) << "Total execution time: " << std::setw(10) << total_duration << " ms\n";
+    std::cout << std::setw(30) << "Total thread execution time: " << std::setw(10) << total_time << " ms\n";
+    std::cout << std::setw(30) << "Total images processed: " << std::setw(10) << total_images << "\n";
+    std::cout << std::setw(30) << "Total size processed: " << std::setw(10) << std::fixed << std::setprecision(2) << total_size / (1024.0 * 1024.0) << " MB\n";
+    
+    // Highlight estimated gains
+    std::cout << std::setw(30) << "Estimated gains: " << "\033[1;92m" << std::setw(10) << std::fixed << std::setprecision(2) << (total_time/total_duration)*100 << "%\033[0m\n";
 
 }
 
 void Logs::logThreadExecution(int thread_id, const std::string& filename, double duration) {
+    size_t file_size = 0;
+    std::string filepath = IMPORT_PATH + filename;
+    
+    if (std::filesystem::exists(filepath)) {
+        file_size = std::filesystem::file_size(filepath) / (1024.0 * 1024.0);
+    }
+
     std::lock_guard<std::mutex> lock(log_mutex);
-    log_queue.push("Thread " + std::to_string(thread_id) + " processed " + filename + " in " + std::to_string(duration) + " ms\n");
+    log_queue.push("Thread " + std::to_string(thread_id) + 
+                   " processed " + filename + 
+                   " (" + std::to_string(file_size) + " MB) in " + 
+                   std::to_string(duration) + " ms\n");
 }

@@ -1,4 +1,5 @@
 #include "../include/master.hpp"
+#include <chrono>
 #include <opencv2/opencv.hpp>
 
 Master::Master(size_t numThreads) : available(numThreads, true) {
@@ -8,6 +9,8 @@ Master::Master(size_t numThreads) : available(numThreads, true) {
     }
 
     std::cout << "Processing " << queue.getSize() << " images." << std::endl; 
+
+    start = std::chrono::high_resolution_clock::now();
 
     for (size_t i = 1; i < numThreads + 1; i++) {
         workers.emplace_back(Worker(this, i));
@@ -27,7 +30,9 @@ Master::~Master() {
         }
     }
 
-    log_queue.logWorker(available.size());
+    double duration = std::chrono::duration<double, std::milli>(std::chrono::high_resolution_clock::now() - start).count();
+
+    log_queue.logWorker(available.size(), duration);
 }
 
 void Master::handleWorkers() {

@@ -18,7 +18,7 @@ private:
     std::mutex log_mutex;
 
 public:
-    void logWorker(size_t num_threads);
+    void logWorker(size_t num_threads, double total_duration);
     void logThreadExecution(int thread_id, const std::string& filename, double duration);
 };
 

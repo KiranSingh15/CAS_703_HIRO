@@ -12,6 +12,7 @@
 #include <thread>
 #include <vector>
 #include <filesystem>
+#include <chrono>
 
 extern const std::string IMPORT_PATH;
 extern const std::string EXPORT_PATH;
@@ -28,6 +29,7 @@ private:
     TaskQueue queue;
     Logs log_queue;
     bool stop = false;
+    std::chrono::time_point<std::chrono::high_resolution_clock> start;
 
     friend class Worker;
 

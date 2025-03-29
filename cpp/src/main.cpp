@@ -30,7 +30,7 @@ int main (int argc, char *argv[]) {
         try {
             std::string answer;
             int inputThreads = std::stoi(argv[1]);
-            std::cout << "You've asked for " << inputThreads << " threads to run this program.\n";
+            std::cout << BLUE << "You've asked for " << inputThreads << " threads to run this program.\n" << RESET;
 
             if (inputThreads < numThreads) {
                 std::cout << "Your computer can support " << GREEN << numThreads << RESET
