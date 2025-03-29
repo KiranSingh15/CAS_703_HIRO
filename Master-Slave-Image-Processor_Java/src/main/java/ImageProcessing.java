@@ -45,25 +45,27 @@ public class ImageProcessing {
         }
     }
 
-    public static void edgeDetection (String inputPath) {
-        try{
-            File inputFile = new File(inputPath);
-            BufferedImage originalImage = ImageIO.read(inputFile);
-            BufferedImage grayscaleImage = GrayScale.applyGrayScale(originalImage);
-            BufferedImage blurredImage = GaussianBlur.applyGaussianBlur(grayscaleImage);
-            BufferedImage laplacianImage = LaplacianFilter.applyLaplacianFilter(blurredImage);
-            // Save Laplacian image
-            LocalDateTime now = LocalDateTime.now();
-            String formattedTimestamp = now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-//            System.out.println("Timestamp: " + formattedTimestamp);
-            int randomNumber = new Random().nextInt(9000) + 1000;
-            // Combine timestamp and random number
-            String timeStampRandNum = formattedTimestamp + "_" + randomNumber;
-            File laplacianFile = new File("output/laplacian_image"+ timeStampRandNum + ".jpg");
-
-            ImageIO.write(laplacianImage, "jpg", laplacianFile);
-        } catch (IOException e) {
-            System.out.println("Error loading or saving image: " + e.getMessage());
-        }
+public static String edgeDetection(String inputPath) {
+    try {
+        File inputFile = new File(inputPath);
+        BufferedImage originalImage = ImageIO.read(inputFile);
+        BufferedImage grayscaleImage = GrayScale.applyGrayScale(originalImage);
+        BufferedImage blurredImage = GaussianBlur.applyGaussianBlur(grayscaleImage);
+        BufferedImage laplacianImage = LaplacianFilter.applyLaplacianFilter(blurredImage);
+        
+        // Create a unique filename using a timestamp and random number.
+        LocalDateTime now = LocalDateTime.now();
+        String formattedTimestamp = now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss"));
+        int randomNumber = new Random().nextInt(9000) + 1000;
+        String outputFilename = MetricsLogger.EXPORT_PATH + "laplacian_image_" + formattedTimestamp + "_" + randomNumber + ".jpg";
+        
+        File laplacianFile = new File(outputFilename);
+        ImageIO.write(laplacianImage, "jpg", laplacianFile);
+        
+        return outputFilename;
+    } catch (IOException e) {
+        System.out.println("Error loading or saving image: " + e.getMessage());
+        return "";
     }
+}
 }
