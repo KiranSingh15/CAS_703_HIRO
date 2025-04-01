@@ -30,11 +30,12 @@ private:
     Logs log_queue;
     bool stop = false;
     std::chrono::time_point<std::chrono::high_resolution_clock> start;
+    bool force;
 
     friend class Worker;
 
 public:
-    explicit Master(size_t numThreads);
+    explicit Master(size_t numThreads, bool force);
     ~Master();
     void loadImages();
     void displayImages(const std::string& filename);
