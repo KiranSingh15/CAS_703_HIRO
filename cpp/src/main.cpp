@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string>
 #include "../include/master.hpp"
-#include <sys/resource.h> // Pour getrusage()
+#include <sys/resource.h> 
 
 #define RESET  "\033[0m"
 #define RED    "\033[31m"
@@ -17,16 +17,19 @@ void printResourceUsage() {
     getrusage(RUSAGE_SELF, &usage);
     
     std::cout << "CPU Time: " << (usage.ru_utime.tv_sec + usage.ru_stime.tv_sec) << " sec\n";
-    std::cout << "Mémoire (max resident set size): " << usage.ru_maxrss << " KB\n";
+    std::cout << "Memory (max resident set size): " << usage.ru_maxrss << " KB\n";
 }
 
 int main (int argc, char *argv[]) {
 
-    std::cout << "\033[2J\033[H"; // Clear terminal
-    
     int numThreads = std::thread::hardware_concurrency();
+    bool force = false;
 
-    if (argc == 2) {
+    if (argc == 3 && strcmp(argv[2], "--force") == 0) { 
+        numThreads = std::stoi(argv[1]);
+        force = true;
+    } else if (argc == 2) {
+        std::cout << "\033[2J\033[H"; // Clear terminal
         try {
             std::string answer;
             int inputThreads = std::stoi(argv[1]);
@@ -61,7 +64,7 @@ int main (int argc, char *argv[]) {
     std::cout << "Running with " << BLUE << numThreads << RESET << " threads.\n";
 
     // Continue with master-slave execution
-    Master master(numThreads);
+    Master master(numThreads, force);
     master.handleWorkers();
 
     printResourceUsage();

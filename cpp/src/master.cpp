@@ -2,7 +2,7 @@
 #include <chrono>
 #include <opencv2/opencv.hpp>
 
-Master::Master(size_t numThreads) : available(numThreads, true) {
+Master::Master(size_t numThreads, bool force) : available(numThreads, true), force(force) {
 
     for (const auto& entry : std::filesystem::directory_iterator(IMPORT_PATH)) {
         queue.push(entry.path().filename());
@@ -32,18 +32,18 @@ Master::~Master() {
 
     double duration = std::chrono::duration<double, std::milli>(std::chrono::high_resolution_clock::now() - start).count();
 
-    log_queue.logWorker(available.size(), duration);
+    if (!force) log_queue.logWorker(available.size(), duration);
 }
 
 void Master::handleWorkers() {
     while (true) {
         std::unique_lock<std::mutex> lock(mtx);
-        if (queue.getSize() == 0) break;
+        if (queue.empty()) break;
         cv_master.wait(lock, [this] { 
             return std::find(available.begin(), available.end(), true) != available.end();
         });
 
-        // Trouver un thread disponible
+        // Find an available thread 
         for (size_t i = 0; i < workers.size(); ++i) {
             if (available[i]) {
                 cv_master.notify_one();
