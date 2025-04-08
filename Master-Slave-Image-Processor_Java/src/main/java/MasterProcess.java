@@ -5,18 +5,35 @@ public class MasterProcess {
     private static final MetricsLogger metricsLogger = new MetricsLogger();
 
     public static void main(String[] args) {
-        int numberOfThreads = 3;
+        int numberOfThreads = 1;
         BlockingQueue<Runnable> taskQueue = new LinkedBlockingQueue<>();
 
         ExecutorService executorService = new ThreadPoolExecutor(
                 numberOfThreads, numberOfThreads, 0L, TimeUnit.MILLISECONDS, taskQueue);
 
+        // Large
+        // List<String> imagePaths = List.of(
+        //         "src/main/java/assets/imglarge.png",
+        //         "src/main/java/assets/imglarge_1.png",
+        //         "src/main/java/assets/imglarge_2.png",
+        //         "src/main/java/assets/imglarge_3.png",
+        //         "src/main/java/assets/imglarge_4.png");
+
+        // Mid
+        // List<String> imagePaths = List.of(
+        //         "src/main/java/assets/imgmid.jpg",
+        //         "src/main/java/assets/imgmid_1.jpg",
+        //         "src/main/java/assets/imgmid_2.jpg",
+        //         "src/main/java/assets/imgmid_3.jpg",
+        //         "src/main/java/assets/imgmid_4.jpg");
+
+        // Small
         List<String> imagePaths = List.of(
-                "src/main/java/imglarge.png",
-                "src/main/java/imglarge_1.png",
-                "src/main/java/imglarge_2.png",
-                "src/main/java/imglarge_3.png",
-                "src/main/java/imglarge_4.png");
+                "src/main/java/assets/imgsmall.jpg",
+                "src/main/java/assets/imgsmall_1.jpg",
+                "src/main/java/assets/imgsmall_2.jpg",
+                "src/main/java/assets/imgsmall_3.jpg",
+                "src/main/java/assets/imgsmall_4.jpg");
 
         // Record overall start time
         long overallStart = System.nanoTime();
