@@ -10,7 +10,6 @@ public class ImageProcessing {
 
     public static void main(String[] args) {
         try {
-//            Current working directory: /Users/changkehang/Desktop/McMaster/CAS703/Project/Master-Slave-Image-Processor
 //            String currentDir = System.getProperty("user.dir");
 //            System.out.println("Current working directory: " + currentDir);
 
