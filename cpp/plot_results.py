@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 
 # Charger les résultats
-data = pd.read_csv("results.txt")
+data = pd.read_csv("../output/results.txt")
 
 # Tracer le graphe
 plt.figure(figsize=(8,5))

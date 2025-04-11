@@ -16,10 +16,11 @@ private:
     Master* master;
     size_t pid;
     std::string filename;
+    bool save;
 
 public:
     // Constructor
-    Worker(Master* master, size_t pid) : master(master), pid(pid) {};
+    Worker(Master* master, size_t pid, bool save) : master(master), pid(pid), save(save) {};
 
     void operator()();
 

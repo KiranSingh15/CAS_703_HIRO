@@ -8,19 +8,30 @@ void Worker::operator()() {
     while (true) {
         {
             std::unique_lock<std::mutex> lock(master->mtx);
-            master->cv_master.wait(lock, [this] {return master->stop || !master->queue.empty(); });
 
-            if  (master->stop) return;
+            // Wait until there's work to do or stop signal is received
+            master->cv_master.wait(lock, [this] {
+                return master->stop || !master->queue.empty();
+            });
 
+            // Exit if the master signaled to stop
+            if (master->stop) return;
+
+            // Get a task and mark this worker as busy
             master->queue.pop(filename);
             master->available[pid] = false;
         }
 
+        // Process the assigned image
         processingImages();
 
         {
             std::unique_lock<std::mutex> lock(master->mtx);
+
+            // Mark this worker as available again
             master->available[pid] = true;
+
+            // Notify master that a worker is free
             master->cv_master.notify_one();
         }
     }
@@ -28,6 +39,7 @@ void Worker::operator()() {
 
 void Worker::processingImages() {
 
+    // start a chrono
     auto start = std::chrono::high_resolution_clock::now();
 
     cv::Mat rgbImage = cv::imread(IMPORT_PATH + filename, cv::IMREAD_COLOR);
@@ -44,10 +56,13 @@ void Worker::processingImages() {
     // Apply Laplacian filter after Gaussian smoothing
     cv::Mat laplacianImage = applyLaplacianFilter(smoothedImage, 3 , 1, 0);    // kernel_size, scale, and delta/offset
 
+    // End of the chrono
     auto end = std::chrono::high_resolution_clock::now();
     double duration = std::chrono::duration<double, std::milli>(end - start).count();
 
-    cv::imwrite(EXPORT_PATH + filename, laplacianImage); 
+    // Save the image if desired
+    if (save) cv::imwrite(EXPORT_PATH + filename, laplacianImage); 
 
+    // Push logs on a queue
     master->log_queue.logThreadExecution(pid, filename, duration);
 }
