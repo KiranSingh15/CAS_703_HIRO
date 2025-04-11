@@ -102,4 +102,4 @@ Also make sure your images are in the `src/main/java/assets/` folder and there a
 ```
 
 ## License
-Not sure we have one
+This code belongs to Raphaël Boutaine, Fred Kehang Chang, Eric Deng, Kiran Singh. However, it may be freely used by Dr. Khedri for future classes, demonstrations, or experimentation.
