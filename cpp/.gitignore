@@ -1,4 +1,6 @@
 # Build artifacts
+venv/
+__pycache__/
 /build/
 /output/
 /images/
@@ -17,6 +19,7 @@ compile_commands.json
 *.lib
 *.dll
 *.dylib
+*.pyc
 
 # Object files
 *.o

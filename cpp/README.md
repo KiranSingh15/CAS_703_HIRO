@@ -117,14 +117,10 @@ To generate the performance graph, two Python libraries are required: `pandas` a
 If you don't have them installed, you can use the provided virtual environment (optional, mostly for macOS/Linux):
 
 ```sh
-source venv/bin/activate  # macOS/Linux only (optional)
-```
-
-**Windows users:**  
-Instead of using `source`, activate the virtual environment with:
-
-```sh
-venv\Scripts\activate
+python3 -m venv venv
+source venv/bin/activate          # macOS/Linux only
+venv\Scripts\activate             # Windows user
+pip install -r requirements.txt
 ```
 
 The graph will be saved in the `build/` directory.
