@@ -31,11 +31,12 @@ private:
     bool stop = false;
     std::chrono::time_point<std::chrono::high_resolution_clock> start;
     bool force;
+    bool save;
 
     friend class Worker;
 
 public:
-    explicit Master(size_t numThreads, bool force);
+    Master(size_t numThreads, bool force, bool save);
     ~Master();
     void loadImages();
     void displayImages(const std::string& filename);

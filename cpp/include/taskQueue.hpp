@@ -4,7 +4,6 @@
 #include <cstddef>
 #include <queue>
 #include <mutex>
-#include <condition_variable>
 #include <string>
 
 class TaskQueue {
@@ -12,7 +11,6 @@ class TaskQueue {
 private: 
     std::queue<std::string> queue;
     std::mutex mutex;
-    // std::condition_variable cond_var;
 
 public:
     void push(const std::string& value);
@@ -21,5 +19,4 @@ public:
     const size_t getSize();
 };
 
-#endif // IMAGE_OPERATIONS_HPP
-
+#endif

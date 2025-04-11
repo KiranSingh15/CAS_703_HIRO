@@ -8,7 +8,7 @@ fi
 
 EXECUTABLE=$1
 OUTPUT_FILE=$2
-THREADS_LIST="1 2 4 8 16 32"
+THREADS_LIST="4 8 16"
 TOTAL_TESTS=$(echo "$THREADS_LIST" | wc -w)  # Nombre total de tests
 CURRENT_TEST=1  # Initialiser le compteur de tests
 
@@ -48,5 +48,3 @@ done
 
 echo "Tests done. Results in $OUTPUT_FILE."
 
-# Supprimer les fichiers dans le dossier output
-rm ../output/*
